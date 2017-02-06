@@ -6,6 +6,11 @@
 
 const Game = require('./src/game');
 
-const game = new Game();
+const game = new Game([
+  null,
+  null,
+  null,
+  null,
+]);
 
 game.printStatus();

@@ -1,3 +1,4 @@
+const helpers = require('./helpers');
 const Card = require('./card');
 
 const suits = [
@@ -36,14 +37,15 @@ class Deck {
   }
 
   shuffle() {
-    const shuffledCards = [];
+    this.cards = helpers.shuffleArray(this.cards);
+  }
 
-    while (this.cards.length > 0) {
-      const randomCardIndex = Math.floor(Math.random() * this.cards.length);
-      shuffledCards.push(this.cards.splice(randomCardIndex, 1)[0]);
-    }
+  pop() {
+    return this.cards.pop();
+  }
 
-    this.cards = shuffledCards;
+  get length() {
+    return this.cards.length;
   }
 
 };
