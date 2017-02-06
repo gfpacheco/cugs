@@ -29,8 +29,8 @@ class Game {
     this.players = ais.map((ai, i) => new Player(i, hands[i], ai));
   }
 
-  printStatus() {
-    console.log(this.players);
+  toString() {
+    return this.players.map((player) => player.toString());
   }
 
 };

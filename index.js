@@ -13,4 +13,4 @@ const game = new Game([
   null,
 ]);
 
-game.printStatus();
+console.log(game.toString());

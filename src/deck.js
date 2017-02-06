@@ -2,10 +2,10 @@ const helpers = require('./helpers');
 const Card = require('./card');
 
 const suits = [
-  'hearts',
-  'diamonds',
-  'clubs',
-  'spades',
+  '♥',
+  '♦',
+  '♣',
+  '♠',
 ];
 
 const values = [
@@ -46,6 +46,10 @@ class Deck {
 
   get length() {
     return this.cards.length;
+  }
+
+  toString() {
+    return this.cards.map((card) => card.toString());
   }
 
 };
