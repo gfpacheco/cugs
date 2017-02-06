@@ -35,6 +35,17 @@ class Deck {
     }
   }
 
+  shuffle() {
+    const shuffledCards = [];
+
+    while (this.cards.length > 0) {
+      const randomCardIndex = Math.floor(Math.random() * this.cards.length);
+      shuffledCards.push(this.cards.splice(randomCardIndex, 1)[0]);
+    }
+
+    this.cards = shuffledCards;
+  }
+
 };
 
 Deck.suits = suits;
