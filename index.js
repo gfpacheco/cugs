@@ -3,3 +3,9 @@
 // [ ] Setup players from arguments
 // [ ] Step by step game
 // [ ] Benchmark mode (100 games without pause)
+
+const Game = require('./src/game');
+
+const game = new Game();
+
+game.printStatus();
