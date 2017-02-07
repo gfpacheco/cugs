@@ -2,15 +2,18 @@ const helpers = require('./helpers');
 const Deck = require('./deck');
 const Player = require('./player');
 
+const MIN_CARDS_PER_PLAYER = 9;
+
 class Game {
 
   constructor(ais) {
-    this.setupDeck();
+    this.setupDeck(ais.length);
     this.setupPlayers(ais);
   }
 
-  setupDeck() {
-    this.deck = new Deck();
+  setupDeck(numOfPlayers) {
+    const numOfDecks = Math.ceil((MIN_CARDS_PER_PLAYER * numOfPlayers) / Deck.size);
+    this.deck = new Deck(numOfDecks);
     this.deck.shuffle();
   }
 

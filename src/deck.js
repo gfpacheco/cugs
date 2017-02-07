@@ -24,14 +24,18 @@ const values = [
   '2',
 ];
 
+const size = suits.length * values.length;
+
 class Deck {
 
-  constructor() {
+  constructor(numOfdecks) {
     this.cards = [];
 
-    for (const suit of suits) {
-      for (const value of values) {
-        this.cards.push(new Card(suit, value));
+    for (let i = 0; i < numOfdecks; i++) {
+      for (const suit of suits) {
+        for (const value of values) {
+          this.cards.push(new Card(suit, value));
+        }
       }
     }
   }
@@ -56,5 +60,6 @@ class Deck {
 
 Deck.suits = suits;
 Deck.values = values;
+Deck.size = size;
 
 module.exports = Deck;
