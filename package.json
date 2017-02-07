@@ -1,7 +1,13 @@
 {
   "name": "cugs",
+  "description": "A Cu game server to benchmark AIs",
   "version": "0.0.0",
   "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gfpacheco/cugs.git"
+  },
   "engines": {
     "node": ">=6"
   },
