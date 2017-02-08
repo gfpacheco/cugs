@@ -6,11 +6,16 @@
 
 const Game = require('./src/game');
 
-const game = new Game([
-  null,
-  null,
-  null,
-  null,
-]);
+const ais = [];
+for (let i = 2; i < process.argv.length; i++) {
+  ais.push(process.argv[i]);
+}
+
+if (ais.length < 2) {
+  console.log('A match needs at least 2 players to happen');
+  process.exit();
+}
+
+const game = new Game(ais);
 
 console.log(game.players.map((player) => player.toString()));
