@@ -26,40 +26,25 @@ const values = [
 
 const size = suits.length * values.length;
 
-class Deck {
+const Deck = {
+  suits: suits,
+  values: values,
+  size: size,
+  getShuffledCards: getShuffledCards,
+};
 
-  constructor(numOfdecks) {
-    this.cards = [];
+module.exports = Deck;
 
-    for (let i = 0; i < numOfdecks; i++) {
-      for (const suit of suits) {
-        for (const value of values) {
-          this.cards.push(new Card(suit, value));
-        }
+function getShuffledCards(numOfdecks) {
+  const cards = [];
+
+  for (let i = 0; i < numOfdecks; i++) {
+    for (const suit of suits) {
+      for (const value of values) {
+        cards.push(new Card(suit, value));
       }
     }
   }
 
-  shuffle() {
-    this.cards = helpers.shuffleArray(this.cards);
-  }
-
-  pop() {
-    return this.cards.pop();
-  }
-
-  get length() {
-    return this.cards.length;
-  }
-
-  toString() {
-    return this.cards.map((card) => card.toString());
-  }
-
-};
-
-Deck.suits = suits;
-Deck.values = values;
-Deck.size = size;
-
-module.exports = Deck;
+  return helpers.shuffleArray(cards);
+}

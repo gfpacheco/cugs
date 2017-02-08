@@ -7,14 +7,18 @@ const MIN_CARDS_PER_PLAYER = 9;
 class Game {
 
   constructor(ais) {
-    this.setupDeck(ais.length);
+    this.setupInitialState(ais.length);
     this.setupPlayers(ais);
   }
 
-  setupDeck(numOfPlayers) {
-    const numOfDecks = Math.ceil((MIN_CARDS_PER_PLAYER * numOfPlayers) / Deck.size);
-    this.deck = new Deck(numOfDecks);
-    this.deck.shuffle();
+  setupInitialState(numPlayers) {
+    this.state = {
+      starterIndex: 0,
+      lastPlayedSet: [],
+      playersHands: [],
+      numOfDecks: Math.ceil((MIN_CARDS_PER_PLAYER * numPlayers) / Deck.size),
+      previousPlays: [],
+    };
   }
 
   setupPlayers(ais) {
@@ -22,10 +26,11 @@ class Game {
 
     const numPlayers = ais.length;
     const hands = ais.map(() => []);
+    const cards = Deck.getShuffledCards(this.state.numOfDecks);
 
     let i = 0;
-    while (this.deck.length > 0) {
-      hands[i % numPlayers].push(this.deck.pop());
+    while (cards.length > 0) {
+      hands[i % numPlayers].push(cards.pop());
       i += 1;
     }
 
