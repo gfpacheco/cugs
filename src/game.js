@@ -1,6 +1,7 @@
 const helpers = require('./helpers');
 const Deck = require('./deck');
 const Player = require('./player');
+const Play = require('./play');
 
 const MIN_CARDS_PER_PLAYER = 9;
 
@@ -14,6 +15,7 @@ class Game {
   setupInitialState(numPlayers) {
     this.state = {
       starterIndex: 0,
+      currentIndex: 0,
       lastPlayedSet: [],
       playersHands: [],
       numOfDecks: Math.ceil((MIN_CARDS_PER_PLAYER * numPlayers) / Deck.size),
@@ -35,6 +37,20 @@ class Game {
     }
 
     this.players = ais.map((ai, i) => new Player(i, hands[i], ai));
+    this.state.playersHands = hands.map((hand) => hand.length);
+  }
+
+  step() {
+    const player = this.players[this.state.currentIndex];
+    return player.play(Object.assign({hand: player.hand}, this.state))
+      .then((set) => {
+        this.state.playersHands = this.players.map((p) => p.hand.length);
+        this.state.previousPlays.push(new Play(this.state.currentIndex, set));
+        this.state.currentIndex += 1;
+      })
+      .catch((err) => {
+        return Promise.reject(`Invalid play: ${err}`);
+      });
   }
 
 };

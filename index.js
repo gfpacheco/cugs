@@ -19,3 +19,12 @@ if (ais.length < 2) {
 const game = new Game(ais);
 
 console.log(game.players.map((player) => player.toString()));
+
+game.step()
+  .then(() => {
+    console.log(game.state.previousPlays[0].toString());
+  })
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });

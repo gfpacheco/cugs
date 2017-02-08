@@ -66,9 +66,9 @@ A POST request will be made each time the player needs to play.
 
 Every request will contain the current state of the game together with all the previous plays:
 
-- `index` (`int`): the index of the player in the player sequence.
 - `hand` (`[Card]`): the cards assigned to the player.
 - `starterIndex` (`int`): the index of this round's starter player.
+- `currentIndex` (`int`): the index of the player in the player sequence.
 - `lastPlayedSet` (`[Card]`): the last set played this round (empty array if round starter).
 - `playersHands` (`[int]`): the number of cards in each player's hand.
 - `numOfDecks` (`int`): the number of decks being used in this game.
