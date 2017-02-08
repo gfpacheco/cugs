@@ -6,7 +6,11 @@ class Play {
   }
 
   toString() {
-    return `Player ${this.playerIndex} played ${this.set.map((card) => card.toString())}`;
+    if (this.set.length > 0) {
+      return `Player ${this.playerIndex} played ${this.set.map((card) => card.toString())}`;
+    }
+
+    return `Player ${this.playerIndex} passed`;
   }
 
 };
