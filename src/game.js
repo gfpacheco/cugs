@@ -20,6 +20,8 @@ class Game {
       playersHands: [],
       numOfDecks: Math.ceil((MIN_CARDS_PER_PLAYER * numPlayers) / Deck.size),
       previousPlays: [],
+      playersFinished: [],
+      finished: false,
     };
   }
 
@@ -41,7 +43,16 @@ class Game {
   }
 
   step() {
-    const player = this.players[this.state.currentIndex];
+    if (this.state.finished) {
+      return Promise.reject('The game already finished');
+    }
+
+    let player = this.players[this.state.currentIndex];
+    while (player.finished) {
+      this.setNextPlayer();
+      player = this.players[this.state.currentIndex];
+    }
+
     return player.play(Object.assign({hand: player.hand}, this.state))
       .then((set) => {
         this.state.playersHands = this.players.map((p) => p.hand.length);
@@ -50,18 +61,33 @@ class Game {
         if (set.length > 0) {
           this.state.lastPlayedSet = set;
           this.state.nextStarterIndex = this.state.currentIndex;
+
+          if (player.hand.length === 0) {
+            player.finished = true;
+            this.state.playersFinished.push(this.state.currentIndex);
+
+            if (this.state.playersFinished.length === this.players.length) {
+              this.state.finished = true;
+            }
+          }
         }
 
-        this.state.currentIndex = (this.state.currentIndex + 1) % this.players.length;
-        if (this.state.currentIndex === this.state.starterIndex) {
-          this.state.starterIndex = this.state.nextStarterIndex;
-          this.state.currentIndex = this.state.nextStarterIndex;
-          this.state.lastPlayedSet = [];
-        }
+        this.setNextPlayer();
+
+        return Promise.resolve([player.finished, this.state.finished, this.state.playersFinished]);
       })
       .catch((err) => {
         return Promise.reject(`Invalid play: ${err}`);
       });
+  }
+
+  setNextPlayer() {
+    this.state.currentIndex = (this.state.currentIndex + 1) % this.players.length;
+    if (this.state.currentIndex === this.state.starterIndex) {
+      this.state.starterIndex = this.state.nextStarterIndex;
+      this.state.currentIndex = this.state.nextStarterIndex;
+      this.state.lastPlayedSet = [];
+    }
   }
 
 };

@@ -17,7 +17,7 @@ if (ais.length < 2) {
 }
 
 const game = new Game(ais);
-let playing = false;
+let waitingPlayer = false;
 
 console.log('Game starting with these hands:');
 console.log(game.players.map((player) => player.toString()));
@@ -32,11 +32,24 @@ process.stdin.on('data', (key) => {
     process.exit();
   }
 
-  if (!playing) {
+  if (!waitingPlayer) {
+    waitingPlayer = true;
     game.step()
-      .then(() => {
-        console.log(game.state.previousPlays[game.state.previousPlays.length - 1].toString());
-        playing = false;
+      .then(([playerFinished, gameFinished, results]) => {
+        const lastPlay = game.state.previousPlays[game.state.previousPlays.length - 1];
+        console.log(lastPlay.toString());
+
+        if (playerFinished) {
+          console.log(`Player ${lastPlay.playerIndex} finished`);
+
+          if (gameFinished) {
+            console.log('Game finished');
+            console.log(`Results: ${results}`);
+            process.exit();
+          }
+        }
+
+        waitingPlayer = false;
       })
       .catch((err) => {
         console.error(err);

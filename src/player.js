@@ -7,6 +7,7 @@ class Player {
     this.index = index;
     this.hand = hand;
     this.ai = ai;
+    this.finished = hand.length === 0;
   }
 
   play(state) {
