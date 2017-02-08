@@ -31,6 +31,7 @@ const Deck = {
   values: values,
   size: size,
   getShuffledCards: getShuffledCards,
+  isValueHigher: isValueHigher,
 };
 
 module.exports = Deck;
@@ -48,3 +49,7 @@ function getShuffledCards(numOfdecks) {
 
   return helpers.shuffleArray(cards);
 }
+
+function isValueHigher(value1, value2) {
+  return values.indexOf(value1) > values.indexOf(value2);
+};

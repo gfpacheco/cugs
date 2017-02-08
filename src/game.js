@@ -46,7 +46,18 @@ class Game {
       .then((set) => {
         this.state.playersHands = this.players.map((p) => p.hand.length);
         this.state.previousPlays.push(new Play(this.state.currentIndex, set));
-        this.state.currentIndex += 1;
+
+        if (set.length > 0) {
+          this.state.lastPlayedSet = set;
+          this.state.nextStarterIndex = this.state.currentIndex;
+        }
+
+        this.state.currentIndex = (this.state.currentIndex + 1) % this.players.length;
+        if (this.state.currentIndex === this.state.starterIndex) {
+          this.state.starterIndex = this.state.nextStarterIndex;
+          this.state.currentIndex = this.state.nextStarterIndex;
+          this.state.lastPlayedSet = [];
+        }
       })
       .catch((err) => {
         return Promise.reject(`Invalid play: ${err}`);

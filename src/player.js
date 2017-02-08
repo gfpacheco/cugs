@@ -1,4 +1,5 @@
 const request = require('request-promise-native');
+const Deck = require('./deck');
 
 class Player {
 
@@ -17,14 +18,28 @@ class Player {
     })
       .then((cards) => {
         let set = [];
+        const value = cards.length > 0 && cards[0].value;
 
         for (const card of cards) {
           const index = this.hand.findIndex((c) => c.suit === card.suit && c.value === card.value);
-          if (index !== undefined) {
-            set = set.concat(this.hand.splice(index, 1));
-          } else {
-            return Promise.reject(`Player ${this.index} has no ${card.suit}${card.value} in hand`);
+
+          if (index === undefined) {
+            return Promise.reject(`Player ${this.index} tried to play a card not in his hand`);
           }
+
+          if (card.value !== value) {
+            return Promise.reject(`Player ${this.index} tried to play cards with different values`);
+          }
+
+          set = set.concat(this.hand.splice(index, 1));
+        }
+
+        const lastPlayedSet = state.lastPlayedSet;
+        if (
+          lastPlayedSet.length > 0 && set.length > 0 &&
+          !Deck.isValueHigher(value, lastPlayedSet[0].value)
+        ) {
+          return Promise.reject(`Player ${this.index} tried to play a set that wasn't higher`);
         }
 
         return set;
