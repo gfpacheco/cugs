@@ -20,7 +20,7 @@ class Game {
       playersHands: [],
       numOfDecks: Math.ceil((MIN_CARDS_PER_PLAYER * numPlayers) / Deck.size),
       previousPlays: [],
-      playersFinished: [],
+      scoreboard: [],
       finished: false,
     };
   }
@@ -64,9 +64,9 @@ class Game {
 
           if (player.hand.length === 0) {
             player.finished = true;
-            this.state.playersFinished.push(this.state.currentIndex);
+            this.state.scoreboard.push(this.state.currentIndex);
 
-            if (this.state.playersFinished.length === this.players.length) {
+            if (this.state.scoreboard.length === this.players.length) {
               this.state.finished = true;
             }
           }
@@ -74,7 +74,7 @@ class Game {
 
         this.setNextPlayer();
 
-        return Promise.resolve([player.finished, this.state.finished, this.state.playersFinished]);
+        return Promise.resolve([player.finished, this.state.finished, this.state.scoreboard]);
       })
       .catch((err) => {
         return Promise.reject(`Invalid play: ${err}`);

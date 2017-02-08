@@ -35,7 +35,7 @@ process.stdin.on('data', (key) => {
   if (!waitingPlayer) {
     waitingPlayer = true;
     game.step()
-      .then(([playerFinished, gameFinished, results]) => {
+      .then(([playerFinished, gameFinished, result]) => {
         const lastPlay = game.state.previousPlays[game.state.previousPlays.length - 1];
         console.log(lastPlay.toString());
 
@@ -44,7 +44,12 @@ process.stdin.on('data', (key) => {
 
           if (gameFinished) {
             console.log('Game finished');
-            console.log(`Results: ${results}`);
+            console.log(`Scoreboard:`);
+
+            for (let i = 0; i < result.length; i++) {
+              console.log(`${i + 1}. Player ${result[i]} (${ais[i]})`);
+            }
+
             process.exit();
           }
         }
