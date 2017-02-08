@@ -37,10 +37,6 @@ class Game {
     this.players = ais.map((ai, i) => new Player(i, hands[i], ai));
   }
 
-  toString() {
-    return this.players.map((player) => player.toString());
-  }
-
 };
 
 module.exports = Game;

@@ -13,4 +13,4 @@ const game = new Game([
   null,
 ]);
 
-console.log(game.toString());
+console.log(game.players.map((player) => player.toString()));
