@@ -75,3 +75,10 @@ Every request will contain the current state of the game together with all the p
 - `previousPlays` (`[Play]`): the previous plays made in this game.
 
 The response body must be an subset of the `hand` property sent in the payload.
+
+## Running
+
+- Setup (once):
+  - `npm install`
+- Run step by step match:
+  - `npm start -- [FIRST_PLAYER_URL] [SECOND_PLAYER_URL] ...`
