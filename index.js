@@ -83,20 +83,21 @@ function runSingleMatch() {
 }
 
 function runBatch(batchSize) {
-  const results = [];
+  const results = {};
+  ais.forEach((ai) => results[ai] = ais.map(() => 0));
 
   const promises = [];
   for (let i = 0; i < batchSize; i += 1) {
     promises.push(runUntilTheEnd(new Game(ais))
       .then((result) => {
-        results.push(result);
+        result.forEach((ai, i) => results[ai][i] += 1);
       }));
   }
 
   Promise.all(promises)
     .then(() => {
       console.log('Matches results:');
-      results.forEach((result) => console.log(`[${result.join(', ')}]`));
+      console.log(results);
     });
 }
 
