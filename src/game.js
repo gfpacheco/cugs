@@ -64,7 +64,7 @@ class Game {
 
           if (player.hand.length === 0) {
             player.finished = true;
-            this.state.scoreboard.push(this.state.currentIndex);
+            this.state.scoreboard.push(player.ai);
 
             if (this.state.scoreboard.length === this.players.length) {
               this.state.finished = true;

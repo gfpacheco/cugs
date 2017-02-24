@@ -65,7 +65,7 @@ function runSingleMatch() {
               console.log(`Scoreboard:`);
 
               for (let i = 0; i < result.length; i += 1) {
-                console.log(`${i + 1}. Player ${result[i]} (${ais[result[i]]})`);
+                console.log(`${i + 1}. Player ${result[i]}`);
               }
 
               process.exit();
@@ -96,7 +96,7 @@ function runBatch(batchSize) {
   Promise.all(promises)
     .then(() => {
       console.log('Matches results:');
-      results.forEach((result) => console.log(result));
+      results.forEach((result) => console.log(`[${result.join(', ')}]`));
     });
 }
 
