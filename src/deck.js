@@ -39,7 +39,7 @@ module.exports = Deck;
 function getShuffledCards(numOfdecks) {
   const cards = [];
 
-  for (let i = 0; i < numOfdecks; i++) {
+  for (let i = 0; i < numOfdecks; i += 1) {
     for (const suit of suits) {
       for (const value of values) {
         cards.push(new Card(suit, value));

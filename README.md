@@ -81,4 +81,6 @@ The response body must be an subset of the `hand` property sent in the payload.
 - Setup (once):
   - `npm install`
 - Run step by step match:
-  - `npm start -- [FIRST_PLAYER_URL] [SECOND_PLAYER_URL] ...`
+  - `npm start -- FIRST_PLAYER_URL SECOND_PLAYER_URL ...`
+- Run multiple matches and print the results:
+  - `npm start -- --batch BATCH_SIZE FIRST_PLAYER_URL SECOND_PLAYER_URL ...`
